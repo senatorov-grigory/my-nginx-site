@@ -28,13 +28,13 @@ This project was created to practice containerization, image building, port mapp
 Run the following command inside the project directory:
 
 ```bash
-podman build -t my-nginx-site:1.0 .
+podman build -t my-nginx-site:1.2 .
 ```
 
 ## Run the Container
 
 ```bash
-podman run -d --name my-site -p 8080:80 my-nginx-site:1.0
+podman run -d --name my-site -p 8080:80 my-nginx-site:1.2
 ```
 
 The website will be available at:
