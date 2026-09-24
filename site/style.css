@@ -1,0 +1,149 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #0d1117;
+    color: #e6edf3;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+header {
+    padding: 70px 20px;
+    text-align: center;
+    background: linear-gradient(135deg, #161b22, #102a43);
+    border-bottom: 1px solid #30363d;
+}
+
+h1 {
+    margin: 10px 0;
+    font-size: 42px;
+}
+
+.subtitle {
+    color: #8b949e;
+}
+
+.label {
+    color: #58a6ff;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
+main {
+    width: min(950px, 90%);
+    margin: 50px auto;
+}
+
+.day {
+    margin-bottom: 45px;
+    padding: 30px;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-top: 5px solid #2f81f7;
+    border-radius: 12px;
+}
+
+.date {
+    color: #58a6ff;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+h2 {
+    margin: 8px 0 25px;
+}
+
+/* One learning step */
+.topic {
+    margin: 20px 0;
+    padding: 22px;
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+}
+
+.topic h3 {
+    margin: 0 0 8px;
+    color: #e6edf3;
+}
+
+.topic p {
+    margin: 0 0 15px;
+    color: #8b949e;
+}
+
+/* Terminal-style command */
+pre {
+    margin: 0;
+    padding: 18px;
+    overflow-x: auto;
+    background: #010409;
+    border: 1px solid #30363d;
+    border-left: 4px solid #3fb950;
+    border-radius: 7px;
+}
+
+code {
+    color: #79c0ff;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* Explanations of command options */
+.command-notes {
+    display: grid;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.command-notes span {
+    padding: 9px 12px;
+    color: #c9d1d9;
+    background: #161b22;
+    border-left: 3px solid #d29922;
+    border-radius: 4px;
+}
+
+.command-notes strong {
+    color: #ffa657;
+    font-family: Consolas, "Courier New", monospace;
+}
+
+footer {
+    padding: 25px;
+    text-align: center;
+    color: #8b949e;
+    border-top: 1px solid #30363d;
+}
+
+@media (max-width: 600px) {
+    header {
+        padding: 45px 15px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    main {
+        width: 94%;
+    }
+
+    .day {
+        padding: 18px;
+    }
+
+    .topic {
+        padding: 16px;
+    }
+
+    code {
+        font-size: 12px;
+    }
+}
+

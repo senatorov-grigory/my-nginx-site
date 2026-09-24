@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Containerization Journey</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <p class="label">LEARNING PROJECT</p>
+
+        <h1>My Containerization Journey</h1>
+
+        <p class="subtitle">
+            My daily progress with Linux, Podman, Nginx and GitHub.
+        </p>
+    </header>
+
+    <main>
+        <!-- DAY 1 -->
+        <section class="day">
+            <div class="date">September 22, 2026</div>
+            <h2>Day 1 &mdash; Linux VM and Podman Setup</h2>
+
+            <article class="topic">
+                <h3>1. Finding the virtual machine IP address</h3>
+
+                <p>
+                    This command displays the IP addresses assigned to the
+                    virtual machine. The IPv4 address is used for SSH and
+                    browser connections.
+                </p>
+
+                <pre><code>hostname -I</code></pre>
+            </article>
+
+            <article class="topic">
+                <h3>2. Connecting through SSH</h3>
+
+                <p>
+                    SSH provides remote terminal access to the Ubuntu Server.
+                    VS Code Remote SSH uses the same connection.
+                </p>
+
+                <pre><code>ssh kon@192.168.110.137</code></pre>
+            </article>
+
+            <article class="topic">
+                <h3>3. Updating the package list</h3>
+
+                <p>
+                    This command downloads current information about packages
+                    available from the Ubuntu repositories.
+                </p>
+
+                <pre><code>sudo apt update</code></pre>
+            </article>
+
+            <article class="topic">
+                <h3>4. Installing Podman</h3>
+
+                <p>
+                    Podman is the container engine used to download images,
+                    create containers and manage container resources.
+                </p>
+
+                <pre><code>sudo apt install podman
+podman --version</code></pre>
+            </article>
+
+            <article class="topic">
+                <h3>5. Starting the first Alpine container</h3>
+
+                <p>
+                    This command creates an interactive container from the
+                    Alpine Linux image and opens its shell.
+                </p>
+
+                <pre><code>podman run -it --name alpine-lab \
+  docker.io/library/alpine:latest sh</code></pre>
+
+                <div class="command-notes">
+                    <span><strong>run</strong> creates and starts a container</span>
+                    <span><strong>-it</strong> opens an interactive terminal</span>
+                    <span><strong>--name</strong> gives the container a readable name</span>
+                    <span><strong>sh</strong> starts the Alpine command shell</span>
+                </div>
+            </article>
+
+            <article class="topic">
+                <h3>6. Checking the operating system</h3>
+
+                <p>
+                    This command was executed inside the container. It confirmed
+                    that the container was running Alpine Linux.
+                </p>
+
+                <pre><code>cat /etc/os-release</code></pre>
+            </article>
+
+            <article class="topic">
+                <h3>7. Leaving and restarting the container</h3>
+
+                <p>
+                    After leaving the shell, the container stopped. It could
+                    later be started again with the same name and filesystem.
+                </p>
+
+                <pre><code>exit
+podman ps -a
+podman start -ai alpine-lab</code></pre>
+            </article>
+        </section>
+
+        <!-- DAY 2 -->
+        <section class="day">
+            <div class="date">September 23, 2026</div>
+            <h2>Day 2 &mdash; Nginx Image and GitHub</h2>
+
+            <article class="topic">
+                <h3>1. Starting an Nginx web server</h3>
+
+                <p>
+                    This command starts Nginx in the background and maps port
+                    8080 on the virtual machine to port 80 in the container.
+                </p>
+
+                <pre><code>podman run -d \
+  --name web-test \
+  -p 8080:80 \
+  docker.io/library/nginx:alpine</code></pre>
+
+                <div class="command-notes">
+                    <span><strong>-d</strong> runs the container in the background</span>
+                    <span><strong>-p 8080:80</strong> connects host port 8080 to container port 80</span>
+                </div>
+            </article>
+
+            <article class="topic">
+                <h3>2. Checking running containers</h3>
+
+                <p>
+                    This command displays active containers, their status,
+                    names, images and published ports.
+                </p>
+
+                <pre><code>podman ps</code></pre>
+            </article>
+
+            <article class="topic">
+                <h3>3. Reading container logs</h3>
+
+                <p>
+                    Logs show the Nginx startup process, HTTP requests and
+                    possible errors.
+                </p>
+
+                <pre><code>podman logs web-test</code></pre>
+            </article>
+
+            <article class="topic">
+                <h3>4. Building a custom image</h3>
+
+                <p>
+                    Podman reads the Containerfile from the current directory
+                    and creates version 1.2 of the website image.
+                </p>
+
+                <pre><code>podman build --format docker \
+  -t my-nginx-site:1.2 .</code></pre>
+
+                <div class="command-notes">
+                    <span><strong>-t</strong> assigns a name and version tag to the image</span>
+                    <span><strong>.</strong> uses the current directory as the build context</span>
+                </div>
+            </article>
+
+            <article class="topic">
+                <h3>5. Running the custom website image</h3>
+
+                <p>
+                    This creates a container from the image that contains the
+                    custom HTML page and Nginx configuration.
+                </p>
+
+                <pre><code>podman run -d \
+  --name my-site \
+  -p 8080:80 \
+  my-nginx-site:1.2</code></pre>
+            </article>
+
+            <article class="topic">
+                <h3>6. Inspecting Git changes</h3>
+
+                <p>
+                    Git status shows changed files. Git diff shows the exact
+                    lines that were added, removed or modified.
+                </p>
+
+                <pre><code>git status
+git diff</code></pre>
+            </article>
+
+            <article class="topic">
+                <h3>7. Saving changes in Git</h3>
+
+                <p>
+                    The files are added to the staging area and saved as a
+                    commit with a description.
+                </p>
+
+                <pre><code>git add .
+git commit -m "Update container project"</code></pre>
+            </article>
+
+            <article class="topic">
+                <h3>8. Uploading changes to GitHub</h3>
+
+                <p>
+                    Git push sends local commits from the virtual machine to
+                    the connected GitHub repository.
+                </p>
+
+                <pre><code>git push</code></pre>
+            </article>
+        </section>
+
+        <!-- DAY 3 -->
+        <section class="day">
+            <div class="date">September 24, 2026</div>
+            <h2>Day 3 &mdash; Bind Mounts and Volumes</h2>
+
+            <article class="topic">
+                <h3>1. Viewing local images</h3>
+
+                <p>
+                    This command displays downloaded and locally built images,
+                    including their tags, IDs and sizes.
+                </p>
+
+                <pre><code>podman images</code></pre>
+            </article>
+
+            <article class="topic">
+                <h3>2. Removing an unused image version</h3>
+
+                <p>
+                    An image can be removed when no container depends on it.
+                    The exact image name or ID identifies what should be removed.
+                </p>
+
+                <pre><code>podman rmi my-nginx-site:1.0</code></pre>
+            </article>
+
+            <article class="topic">
+                <h3>3. Creating a bind mount</h3>
+
+                <p>
+                    The local site directory is mounted directly into Nginx.
+                    Changes made in VS Code become visible after refreshing
+                    the browser without rebuilding the image.
+                </p>
+
+                <pre><code>podman run -d \
+  --name my-site-bind \
+  -p 8081:80 \
+  -v "$PWD/site:/usr/share/nginx/html:ro" \
+  docker.io/library/nginx:alpine</code></pre>
+
+                <div class="command-notes">
+                    <span><strong>$PWD/site</strong> is the site directory on the virtual machine</span>
+                    <span><strong>/usr/share/nginx/html</strong> is the Nginx website directory</span>
+                    <span><strong>:ro</strong> makes the mount read-only inside the container</span>
+                </div>
+            </article>
+
+            <article class="topic">
+                <h3>4. Creating a named volume</h3>
+
+                <p>
+                    A named volume stores persistent data managed by Podman.
+                    Its data can remain available after a container is removed.
+                </p>
+
+                <pre><code>podman volume create nginx-site-data
+podman volume ls</code></pre>
+            </article>
+
+            <article class="topic">
+                <h3>5. Using the named volume</h3>
+
+                <p>
+                    The volume is mounted into the Nginx website directory.
+                    Port 8082 is used so this container can run together with
+                    the containers on ports 8080 and 8081.
+                </p>
+
+                <pre><code>podman run -d \
+  --name my-site-volume-new \
+  -p 8082:80 \
+  -v nginx-site-data:/usr/share/nginx/html \
+  my-nginx-site:1.2</code></pre>
+            </article>
+
+            <article class="topic">
+                <h3>6. Executing a command inside a running container</h3>
+
+                <p>
+                    Podman exec runs an additional command inside an existing
+                    container without creating a new container.
+                </p>
+
+                <pre><code>podman exec my-site-volume-new \
+  ls -l /usr/share/nginx/html</code></pre>
+            </article>
+
+            <article class="topic">
+                <h3>7. Checking all containers and port mappings</h3>
+
+                <p>
+                    The -a option includes both running and stopped containers.
+                    The PORTS column shows which host port belongs to each container.
+                </p>
+
+                <pre><code>podman ps -a</code></pre>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <p>Created by Grigory Senatorov</p>
+    </footer>
+</body>
+</html>
