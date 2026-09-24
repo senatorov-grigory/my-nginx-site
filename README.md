@@ -57,13 +57,27 @@ podman run -d \
   my-nginx-site:1.3
 ```
 
-The website is available at:
+## Open the Website
 
-```text
-http://SERVER_IP:8080
+Find the IP address of the Linux server or virtual machine:
+
+```bash
+hostname -I
 ```
 
-Port `8080` belongs to the server, while port `80` belongs to Nginx inside the container.
+When the project runs inside a VMware virtual machine, use the virtual machine IP address:
+
+```text
+http://VM_IP:8080
+```
+
+Example from my local environment:
+
+```text
+http://192.168.110.137:8080
+```
+
+The exact IP address may change depending on the VMware network configuration.
 
 ## Development with a Bind Mount
 
